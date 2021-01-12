@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "serve": "concurrently \"npm run dev\" \"npm run mock\"",
     "mock": "json-server -w db.json -p 4200 -d 450"
   },
   "dependencies": {
