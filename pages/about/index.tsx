@@ -2,8 +2,13 @@ import React from 'react';
 import Router from 'next/router';
 import Head from "next/head";
 import {MainLayout} from "../../components/MainLayout";
+import {NextPageContext} from "next";
 
-export default function About() {
+interface AboutPage {
+    title: string
+}
+
+export default function About({title}: AboutPage) {
 
     const linkClickHandler = () => {
         Router.push('/')
@@ -12,7 +17,7 @@ export default function About() {
     return (
         <MainLayout title={'About page'}>
             <Head>
-                <title>About page title | Next js</title>
+                <title>{title}</title>
             </Head>
             <h2>About</h2>
 
@@ -21,3 +26,12 @@ export default function About() {
         </MainLayout>
     )
 }
+
+About.getInitialProps = async ({}: NextPageContext) => {
+    const response = await fetch(`${process.env.API_URL}/about`);
+    const data = await response.json();
+
+    return {
+        title: data.title
+    }
+};
